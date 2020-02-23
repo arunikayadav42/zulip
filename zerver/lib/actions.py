@@ -5204,9 +5204,8 @@ def do_get_user_invites(user_profile: UserProfile) -> List[Dict[str, Any]]:
     revoked_value = getattr(confirmation_settings, 'STATUS_REVOKED', 2)
 
     lowest_datetime = timezone_now() - datetime.timedelta(days=days_to_activate)
-    prereg_users = PreregistrationUser.objects.exclude(status=active_value).exclude(status=revoked_value).filter(
-        invited_at__gte=lowest_datetime,
-        referred_by__realm=user_profile.realm)
+    prereg_users = PreregistrationUser.objects.exclude(status=active_value).exclude(status=revoked_value)\
+                            .filter(invited_at__gte=lowest_datetime, referred_by__realm=user_profile.realm)
 
     invites = []
 
